@@ -1,0 +1,18 @@
+{% load static %}
+<div class="container py-5">
+    <h1>Каталог товаров</h1>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.price }} руб.</p>
+                    <a href="#" class="btn btn-primary">В корзину</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

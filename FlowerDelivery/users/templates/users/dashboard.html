@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'admin/css/styles.css' %}">
+    <style>
+        body {
+            background-color: #ffe6f2; /* Нежно-розовый фон */
+            font-family: 'Dancing Script', Arial, sans-serif;
+        }
+        .dashboard-header {
+            text-align: center;
+            margin-top: 30px;
+            color: #ff6699;
+        }
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+        }
+        .orders-table {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .btn-cart {
+            background-color: #ff6699;
+            border-color: #ff6699;
+            color: #fff;
+        }
+        .btn-cart:hover {
+            background-color: #e65585;
+            border-color: #e65585;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container d-flex justify-content-between align-items-center py-2">
+            <div class="left">
+                <a href="/" class="text-decoration-none text-dark">Главная</a>
+                <a href="/catalog/" class="text-decoration-none text-dark">Каталог товаров</a>
+            </div>
+            <div class="logo">FlowersDelivery</div>
+            <div class="right">
+                <a href="/users/logout/" class="text-decoration-none text-dark">Выход</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container py-5">
+        <div class="dashboard-header">
+            <h1>{{ request.user.username }}, добро пожаловать в личный кабинет!</h1>
+        </div>
+
+        <div class="orders-table mt-5">
+            <h3>История заказов</h3>
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Дата заказа</th>
+                        <th>Общая сумма</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.created_at|date:"d.m.Y" }}</td>
+                    <td>{{ order.total_price }} руб.</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" class="text-center">У вас пока нет заказов.</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="/cart/" class="btn btn-cart btn-lg">Перейти в корзину</a>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer bg-light py-3 text-center">
+        <div class="social-icons">
+            <a href="https://vk.com" target="_blank" class="icon mx-2">
+                <img src="{% static 'icons/vk.svg' %}" alt="ВКонтакте">
+            </a>
+            <a href="https://zen.yandex.ru" target="_blank" class="icon mx-2">
+                <img src="{% static 'icons/zen.svg' %}" alt="Дзен">
+            </a>
+            <a href="https://t.me" target="_blank" class="icon mx-2">
+                <img src="{% static 'icons/telegram.svg' %}" alt="Telegram">
+            </a>
+        </div>
+        <p>&copy; 2024 FlowersDelivery. Все права защищены.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
